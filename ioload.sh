@@ -1,8 +1,9 @@
 #!/bin/bash
 PROC=/host/proc/net/dev
 test -r $PROC || exit
-IOARRAY=($(cat $PROC | grep -w docker0:))
+IOARRAY=($(cat $PROC | grep -w eth0:))
 TRANSBYTES=${IOARRAY[9]}
+#TRANSBYTES=${IOARRAY[1]}
 NOWSEC=$(date +%s)
 RESULT="$TRANSBYTES $NOWSEC"
 
