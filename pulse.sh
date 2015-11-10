@@ -2,13 +2,11 @@
 LOOP_SEC=$1
 ADMIN_PASS=$2
 LOADBALANCER_ADDR=$3
-MOUNTPOINT_LIST=$4
-BW_LIMIT=$5
+BW_LIMIT=$4
 
 test -z $LOOP_SEC && exit;
 test -z $ADMIN_PASS && exit;
 test -z $LOADBALANCER_ADDR && exit;
-test -z $MOUNTPOINT_LIST && exit;
 test -z $BW_LIMIT && exit;
 
 while true; do
@@ -22,8 +20,11 @@ while true; do
     TIMESTAMP=${A_IO[1]}
     IOLOAD=${A_IO[2]}
 
+    MOUNT="$( ./mountpoints.sh)"
+
     if [ "x$CPULOAD" != "x" -a "x$IOLOAD" != "x" ]; then
-	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNTPOINT_LIST&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD" 2>&1 > /dev/null
+#	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNTPOINT_LIST&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD" 2>&1 > /dev/null
+	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNT&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD" 2>&1 > /dev/null
     fi
     sleep $LOOP_SEC
 done
