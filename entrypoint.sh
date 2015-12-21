@@ -6,10 +6,10 @@ IC_HOST="$(cat /etc/hosts | grep -iw ${LINKED_CONTAINER} | awk '{print $1}')"
 eval IC_PORT=\$${LINKED_CONTAINER}_ENV_IC_PORT
 eval IC_ADMIN_PASS=\$${LINKED_CONTAINER}_ENV_IC_ADMIN_PASS
 
-#if [ "x$IC_HOST" == "x" ]; then
-#cat /et	    ./pulse.sh $LOOP_SEC $UPDATE_ADMIN_PASS $LOADBALANCER_ADDR $BW_LIMIT
-#else
-#    ./pulse.sh $LOOP_SEC $UPDATE_ADMIN_PASS $LOADBALANCER_ADDR $BW_LIMIT $IC_ADMIN_PASS $IC_HOST $IC_PORT
-#fi
-bash
+if [ "x$IC_HOST" == "x" ]; then
+    ./pulse.sh $LOOP_SEC $UPDATE_ADMIN_PASS $LOADBALANCER_ADDR $BW_LIMIT
+else
+    ./pulse.sh $LOOP_SEC $UPDATE_ADMIN_PASS $LOADBALANCER_ADDR $BW_LIMIT $IC_ADMIN_PASS $IC_HOST $IC_PORT
+fi
+#bash
 exit
