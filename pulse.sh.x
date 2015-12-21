@@ -20,11 +20,7 @@ while true; do
     TIMESTAMP=${A_IO[1]}
     IOLOAD=${A_IO[2]}
 
-    if [ "x$IC_HOST" == "x127.0.0.1" -o "x$IC_HOST" == "x" ]; then
-	MOUNT="proxy"
-    else
-	MOUNT="$( ./mountpoints.sh)"
-    fi
+    MOUNT="$( ./mountpoints.sh)"
 
     if [ "x$CPULOAD" != "x" -a "x$IOLOAD" != "x" ]; then
 #	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNTPOINT_LIST&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD" 2>&1 > /dev/null
