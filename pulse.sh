@@ -21,7 +21,7 @@ while true; do
     IOLOAD=${A_IO[2]}
 
     if [ "x$IC_HOST" == "x127.0.0.1" -o "x$IC_HOST" == "x" ]; then
-	MOUNT="proxy"
+	MOUNT="0@proxy"
     else
 	MOUNT="$( ./mountpoints.sh)"
     fi
