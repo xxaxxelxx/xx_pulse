@@ -2,7 +2,7 @@
 
 MOUNTSTATFILE="/dev/shm/mountstat.xml"
 
-$(which curl) --user "admin:$IC_ADMIN_PASS" -s http://$IC_HOST:$IC_PORT/admin/listmounts > $MOUNTSTATFILE
+$(which curl) --connect-timeout 20 --max-time 30 --user "admin:$IC_ADMIN_PASS" -s http://$IC_HOST:$IC_PORT/admin/listmounts > $MOUNTSTATFILE
 #$(which curl) --user "admin:lalalala1" -s http://192.168.90.29:80/admin/listmounts > $MOUNTSTATFILE
 
 test -r $MOUNTSTATFILE
