@@ -27,7 +27,7 @@ while true; do
     fi
 
     if [ "x$CPULOAD" != "x" -a "x$IOLOAD" != "x" ]; then
-	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNT&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD" 2>&1 > /dev/null && echo "$CPULOAD" > /tmp/pulse.cpuload
+	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNT&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD" 2>&1 > /dev/null && echo "$CPULOAD" > /host/tmp/pulse.cpuload
     fi
     sleep $LOOP_SEC
 done
