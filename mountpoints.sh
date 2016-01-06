@@ -14,6 +14,13 @@ if [ $? -eq 0 ]; then
 	if [ $? -eq 0 ]; then
 	    CLISTENERS=$(xmllint --xpath "//icestats/source[@$CMOUNT]/listeners" $MOUNTSTATFILE | sed 's|<[^>]*.||g')
 	    eval $CMOUNT; XMOUNT="$mount"
+	    echo "$XMOUNT" | grep "\/intro\." > /dev/null
+	    if [ $? -eq 0 ]; then
+		CLISTENERS=$(( $CLISTENERS - 1 ))
+		if [ $CLISTENERS -lt 0 ]; then
+		    CLISTENERS=0
+		fi 
+	    fi
 	    test -z $RETURN
 	    if [ $? -eq 0 ]; then
 		RETURN="$CLISTENERS@$XMOUNT"
