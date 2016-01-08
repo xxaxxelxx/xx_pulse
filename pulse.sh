@@ -3,7 +3,7 @@ LOOP_SEC=$1
 ADMIN_PASS=$2
 LOADBALANCER_ADDR=$3
 BW_LIMIT=$4
-LOAD_LIMIT=$5
+LOAD_LIMIT=$8
 
 test -z $LOOP_SEC && exit;
 test -z $ADMIN_PASS && exit;
