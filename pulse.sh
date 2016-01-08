@@ -3,11 +3,13 @@ LOOP_SEC=$1
 ADMIN_PASS=$2
 LOADBALANCER_ADDR=$3
 BW_LIMIT=$4
+LOAD_LIMIT=$5
 
 test -z $LOOP_SEC && exit;
 test -z $ADMIN_PASS && exit;
 test -z $LOADBALANCER_ADDR && exit;
 test -z $BW_LIMIT && exit;
+test -z $LOAD_LIMIT && exit;
 
 while true; do
     A_CPU=($( ./cpuload.sh $TOTALTICKS $IDLETICKS ))
@@ -27,7 +29,7 @@ while true; do
     fi
 
     if [ "x$CPULOAD" != "x" -a "x$IOLOAD" != "x" -a "x$MOUNT" != "x" ]; then
-	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNT&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD" 2>&1 > /dev/null && echo "$CPULOAD" > /host/tmp/pulse.cpuload
+	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNT&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD&loadl=$LOAD_LIMIT" 2>&1 > /dev/null && echo "$CPULOAD" > /host/tmp/pulse.cpuload
     fi
     sleep $LOOP_SEC
 done
