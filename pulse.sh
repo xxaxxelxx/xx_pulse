@@ -4,6 +4,7 @@ ADMIN_PASS=$2
 LOADBALANCER_ADDR=$3
 BW_LIMIT=$4
 LOAD_LIMIT=$8
+LOG=/host/tmp/pulse.log
 
 test -z $LOOP_SEC && exit;
 test -z $ADMIN_PASS && exit;
@@ -22,20 +23,18 @@ while true; do
     TIMESTAMP=${A_IO[1]}
     IOLOAD=${A_IO[2]}
 
-echo "H:   $IC_HOST" > /host/tmp/test.log
-echo "CPU: $CPULOAD" >> /host/tmp/test.log
-echo "IO:  $IOLOAD" >> /host/tmp/test.log
-
     if [ "x$IC_HOST" == "x127.0.0.1" -o "x$IC_HOST" == "x" ]; then
 	MOUNT="0@proxy"
     else
 	MOUNT="$( ./mountpoints.sh)"
     fi
 
-echo "MNT: $MOUNT" >> /host/tmp/test.log
+echo "H:   $IC_HOST" > $LOG
+echo "CPU: $CPULOAD" >> $LOG
+echo "IO:  $IOLOAD" >> $LOG
+echo "MNT: $MOUNT" >> $LOG
 
     if [ "x$CPULOAD" != "x" -a "x$IOLOAD" != "x" -a "x$MOUNT" != "x" ]; then
-#echo CURL >> /host/tmp/test.log
 	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNT&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD&loadl=$LOAD_LIMIT" 2>&1 > /dev/null && echo "$CPULOAD" > /host/tmp/pulse.cpuload
 	    echo "$LOADBALANCER_ADDR" > /host/tmp/loadbalancer.addr
     fi
