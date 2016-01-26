@@ -22,6 +22,8 @@ while true; do
     TIMESTAMP=${A_IO[1]}
     IOLOAD=${A_IO[2]}
 
+echo $IC_HOST > /host/tmp/test.log
+
     if [ "x$IC_HOST" == "x127.0.0.1" -o "x$IC_HOST" == "x" ]; then
 	MOUNT="0@proxy"
     else
