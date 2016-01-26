@@ -30,6 +30,6 @@ if [ $? -eq 0 ]; then
 	fi
     done
 fi
-test -r $MOUNTSTATFILE && rm -f $MOUNTSTATFILE
+#test -r $MOUNTSTATFILE && rm -f $MOUNTSTATFILE
 echo $RETURN
 exit
