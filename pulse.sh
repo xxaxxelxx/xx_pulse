@@ -32,6 +32,8 @@ echo "IO:  $IOLOAD" >> /host/tmp/test.log
 	MOUNT="$( ./mountpoints.sh)"
     fi
 
+echo "MNT: $MOUNT" >> /host/tmp/test.log
+
     if [ "x$CPULOAD" != "x" -a "x$IOLOAD" != "x" -a "x$MOUNT" != "x" ]; then
 echo CURL >> /host/tmp/test.log
 	    curl -o /dev/null --connect-timeout 1 --digest --user "admin:$ADMIN_PASS" -s "http://$LOADBALANCER_ADDR/update.php?mnt=$MOUNT&bw=$IOLOAD&bwl=$BW_LIMIT&load=$CPULOAD&loadl=$LOAD_LIMIT" 2>&1 > /dev/null && echo "$CPULOAD" > /host/tmp/pulse.cpuload
